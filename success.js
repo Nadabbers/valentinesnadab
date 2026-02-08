@@ -50,4 +50,4 @@ setTimeout(()=>clearInterval(burstInterval),180000);
 
 // Back button
 const backBtn = document.getElementById('backBtn');
-if(backBtn) backBtn.addEventListener('click', ()=>{window.location.href='valentines.html'});
+if(backBtn) backBtn.addEventListener('click', ()=>{window.location.href='index.html'});
