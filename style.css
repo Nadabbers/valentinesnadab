@@ -1,0 +1,166 @@
+body {
+    background: linear-gradient(135deg, #ffb6c1 0%, #ff69b4 100%);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(255, 105, 180, 0.2);
+    max-width: 520px;
+    padding: 48px 36px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center;
+    transition: transform 0.2s ease;
+}
+
+/* Collage background behind the card — drop your images into images/ and update paths in HTML */
+.collage {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.collage img {
+    position: absolute;
+    width: 30vmin;
+    max-width: 45%;
+    height: auto;
+    border-radius: 18px;
+    object-fit: cover;
+    opacity: 0.95;
+    filter: saturate(1.05) contrast(0.95);
+    transition: transform 0.35s ease, opacity 0.35s ease;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.12);
+    pointer-events: auto; /* allow dragging */
+    touch-action: none;
+    cursor: grab;
+}
+
+/* individual placements - more varied scatter, sizes and stacking */
+.collage .c1 { top: 8%; left: 8%; transform: rotate(-12deg) scale(1.05); width: 34vmin; z-index: 1; }
+.collage .c2 { top: 6%; right: 12%; transform: rotate(10deg) scale(0.95); width: 30vmin; z-index: 1; }
+.collage .c3 { top: 22%; left: 16%; transform: rotate(-6deg) scale(1.05); width: 38vmin; opacity: 0.96; z-index: 1; }
+.collage .c4 { bottom: 10%; right: 14%; transform: rotate(-18deg) scale(1.02); width: 32vmin; z-index: 1; }
+.collage .c5 { bottom: 12%; left: 22%; transform: rotate(14deg) scale(0.92); width: 30vmin; z-index: 1; }
+.collage .c6 { top: 36%; right: 14%; transform: rotate(-4deg) scale(1.1); width: 36vmin; opacity: 0.9; z-index: 1; }
+
+@media (max-width: 600px) {
+    .collage img { display: none; }
+}
+
+.collage img.dragging { cursor: grabbing; transform: scale(1.02); box-shadow: 0 40px 100px rgba(0,0,0,0.2); }
+
+.collage-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.06));
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+}
+
+/* make sure the card sits above the collage */
+.container { z-index: 2; }
+
+h1 {
+    color: #d7263d;
+    font-size: 3.2em;
+    margin-bottom: 0.5em;
+}
+
+.subtitle {
+    color: #ff69b4;
+    font-size: 1.2em;
+    margin-bottom: 1em;
+}
+
+.details {
+    color: #333;
+    margin-bottom: 1.5em;
+}
+
+.valentine-question {
+    margin-bottom: 1.5em;
+}
+
+.valentine-question p {
+    color: #d7263d;
+    font-size: 1.9em;
+    margin-bottom: 0.7em;
+}
+
+.choices {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 1em;
+}
+
+.valentine-btn {
+    background: #d7263d;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 28px;
+    font-size: 1.15em;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.15);
+}
+.valentine-btn:hover {
+    background: #ff69b4;
+    transform: scale(1.08);
+}
+
+.enlarge {
+    font-size: 1.3em !important;
+    padding: 18px 36px !important;
+    transition: font-size 0.3s, padding 0.3s;
+    background: #ff69b4 !important;
+    box-shadow: 0 4px 16px rgba(255, 105, 180, 0.25);
+}
+
+
+button {
+    background: #d7263d;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 32px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-bottom: 1em;
+}
+
+button:hover {
+    background: #ff69b4;
+}
+
+.hidden {
+    display: none;
+}
+
+#rsvpMessage {
+    color: #d7263d;
+    font-size: 1.1em;
+    margin-top: 1em;
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
