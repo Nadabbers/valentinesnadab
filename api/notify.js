@@ -36,13 +36,37 @@ export default async function handler(req, res) {
       ip: req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.socket.remoteAddress || null,
     }
   };
+  // Helper: truncate strings to a safe length for embed fields
+  function trunc(s, n = 1024) {
+    if (!s && s !== 0) return 'Unknown';
+    s = String(s);
+    return s.length > n ? s.slice(0, n - 1) + '…' : s;
+  }
+
+  // Detect Discord webhook URL and format payload as a Discord embed when possible
+  const isDiscord = /discord(?:app)?\.com\/api\/webhooks/i.test(webhook);
+  const sendBody = isDiscord ? JSON.stringify({
+    username: 'Valentine Bot',
+    embeds: [
+      {
+        title: `New RSVP: ${String(message.choice).toUpperCase()}`,
+        description: `Someone clicked **${trunc(message.choice, 256)}** on the invitation.`,
+        fields: [
+          { name: 'Time', value: trunc(message.time, 256), inline: true },
+          { name: 'IP', value: trunc(message.meta.ip || 'Unknown', 256), inline: true },
+          { name: 'User Agent', value: trunc(message.meta.userAgent || 'Unknown', 1024), inline: false }
+        ],
+        color: 16711935,
+        timestamp: message.time
+      }
+    ]
+  }) : JSON.stringify(message);
 
   try {
-    // POST the message to the configured webhook
     const r = await fetch(webhook, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(message),
+      body: sendBody,
     });
 
     if (!r.ok) {
