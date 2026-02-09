@@ -48,6 +48,18 @@ window.addEventListener('keydown', onKey);
 
 let enlargeScale = 1;
 
+// rotating messages for repeated No clicks
+const noMessages = [
+    "Wrong! Pick Again!",
+    "Come on now say yes",
+    "Say yes already",
+    "You have no choice here buddy",
+    "Nope, Can't say no",
+    "Dude, really?",
+    "Anytime now"
+];
+let noMessageIndex = 0;
+
 // Heart sequence shown after intro dismissed
 function runHeartSequence() {
     // hide main container during animation (use opacity so we can fade it in later)
@@ -223,7 +235,9 @@ yesExBtn.addEventListener('click', function() {
 
 noBtn.addEventListener('click', function() {
     // show wrong answer message, then enlarge the Yes buttons and the card (no navigation)
-    messageDiv.textContent = "Wrong Answer!";
+    // show rotating messages for repeated No clicks, then enlarge the Yes buttons and the card (no navigation)
+    messageDiv.textContent = noMessages[noMessageIndex];
+    noMessageIndex = (noMessageIndex + 1) % noMessages.length;
     messageDiv.classList.remove('hidden');
     enlargeScale += 0.15;
     const newFont = baseFontPx * enlargeScale;

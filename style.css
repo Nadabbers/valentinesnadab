@@ -145,6 +145,14 @@ body {
     filter: drop-shadow(0 20px 50px rgba(215,40,70,0.25));
     animation: bigHeartPop 700ms cubic-bezier(.2,.9,.2,1) forwards;
 }
+
+.move-note{
+    margin-top: 18px;
+    color: #6b6b6b;
+    font-size: 0.95rem;
+    text-align: center;
+    opacity: 0.9;
+}
 @keyframes bigHeartPop{
     0% { transform: scale(0); opacity: 0 }
     40% { transform: scale(1.6); opacity: 1 }
