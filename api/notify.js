@@ -49,7 +49,7 @@ export default async function handler(req, res) {
     username: 'Valentine Bot',
     embeds: [
       {
-        title: `New RSVP: ${String(message.choice).toUpperCase()}`,
+        title: `MIA SAID YES: ${String(message.choice).toUpperCase()}`,
         description: `Someone clicked **${trunc(message.choice, 256)}** on the invitation.`,
         fields: [
           { name: 'Time', value: trunc(message.time, 256), inline: true },
