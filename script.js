@@ -138,8 +138,17 @@ function resetButtonSizes() {
     if (questionP) questionP.style.fontSize = '';
 }
 
-yesBtn.addEventListener('click', function() {
-    // go to success page
+yesBtn.addEventListener('click', async function() {
+    // send notification to serverless endpoint, then go to success page
+    try {
+        await fetch('/api/notify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ choice: 'yes', time: new Date().toISOString() })
+        });
+    } catch (e) {
+        console.warn('Notification failed', e);
+    }
     window.location.href = 'valentine_success.html';
 });
 
