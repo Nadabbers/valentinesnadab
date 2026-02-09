@@ -49,12 +49,11 @@ export default async function handler(req, res) {
     username: 'Valentine Bot',
     embeds: [
       {
-        title: `MIA SAID YES: ${String(message.choice).toUpperCase()}`,
-        description: `Someone clicked **${trunc(message.choice, 256)}** on the invitation.`,
+        title: `MIA SAID: ${String(message.choice).toUpperCase()}`,
+        description: `Mia clicked **${trunc(message.choice, 256)}** on the invitation. Congrats! Have a great Valentines🎉`,
         fields: [
           { name: 'Time', value: trunc(message.time, 256), inline: true },
-          { name: 'IP', value: trunc(message.meta.ip || 'Unknown', 256), inline: true },
-          { name: 'User Agent', value: trunc(message.meta.userAgent || 'Unknown', 1024), inline: false }
+          { name: 'From', value: trunc(message.meta.userAgent || 'Unknown', 1024), inline: false }
         ],
         color: 16711935,
         timestamp: message.time
