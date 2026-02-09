@@ -22,7 +22,88 @@ const questionComputed = questionP ? window.getComputedStyle(questionP) : null;
 const baseQuestionFontPx = questionComputed ? parseFloat(questionComputed.fontSize) || 20 : 20;
 
 
+// --- Intro overlay handling ---
+const intro = document.getElementById('intro');
+const enterBtn = document.getElementById('enterBtn');
+const collage = document.querySelector('.collage');
+function hideIntro() {
+    if (!intro) return;
+    // hide the intro overlay immediately
+    intro.style.display = 'none';
+    // run the heart sequence before revealing main content
+    runHeartSequence();
+}
+if (enterBtn) {
+    enterBtn.addEventListener('click', hideIntro);
+    // focus Enter for keyboard users
+    enterBtn.focus();
+}
+// allow keyboard (Enter / Space) to dismiss the intro
+function onKey(e){
+    if (!intro || intro.style.display === 'none') return;
+    if (e.key === 'Enter' || e.key === ' ' || e.code === 'Space') hideIntro();
+}
+window.addEventListener('keydown', onKey);
+
+
 let enlargeScale = 1;
+
+// Heart sequence shown after intro dismissed
+function runHeartSequence() {
+    // hide main container during animation (use opacity so we can fade it in later)
+    if (container) {
+        container.style.transition = 'opacity 480ms ease';
+        container.style.opacity = '0';
+        container.style.visibility = 'hidden';
+    }
+    // hide collage images until heart completes
+    if (collage) {
+        collage.style.transition = 'opacity 480ms ease';
+        collage.style.opacity = '0';
+    }
+
+    const overlay = document.createElement('div');
+    overlay.className = 'heart-overlay';
+    // big heart
+    const big = document.createElement('div');
+    big.className = 'big-heart';
+    big.textContent = '❤';
+    overlay.appendChild(big);
+
+    // create several mini hearts around center with random offsets
+    const miniCount = 22;
+    for (let i = 0; i < miniCount; i++) {
+        const m = document.createElement('div');
+        m.className = 'mini-heart';
+        m.textContent = ['❤','💖','💗','💘'][Math.floor(Math.random()*4)];
+        const angle = Math.random() * Math.PI * 2;
+        const radius = 20 + Math.random() * 120;
+        const x = Math.cos(angle) * (10 + Math.random() * 80);
+        const y = Math.sin(angle) * (10 + Math.random() * 40);
+        m.style.left = (50 + x) + '%';
+        m.style.top = (50 + y) + '%';
+        // randomize timing a bit
+        m.style.animationDelay = (Math.random() * 300) + 'ms';
+        overlay.appendChild(m);
+    }
+
+    document.body.appendChild(overlay);
+
+    // linger then remove overlay and fade in the main content
+    const DURATION = 1500; // ms (1.5s)
+    setTimeout(() => {
+        try { overlay.remove(); } catch (e) {}
+        if (container) {
+            // reveal and fade in
+            container.style.visibility = 'visible';
+            // ensure transition is applied then set opacity to 1
+            requestAnimationFrame(() => {
+                container.style.opacity = '1';
+                if (collage) collage.style.opacity = '1';
+            });
+        }
+    }, DURATION);
+}
 
 function resetButtonSizes() {
     // remove inline sizing so CSS returns to control

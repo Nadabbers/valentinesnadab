@@ -31,6 +31,7 @@ body {
     z-index: 0;
     pointer-events: none;
     overflow: hidden;
+    transition: opacity 480ms ease;
 }
 
 .collage img {
@@ -73,6 +74,97 @@ body {
 
 /* make sure the card sits above the collage */
 .container { z-index: 2; }
+
+/* Intro overlay */
+#intro {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(255, 235, 240, 0.98), rgba(255, 245, 248, 0.98));
+    z-index: 9999;
+    transition: opacity 360ms ease;
+}
+.intro-card{
+    background: rgba(255,255,255,0.92);
+    padding: 32px 40px;
+    border-radius: 16px;
+    box-shadow: 0 24px 80px rgba(214,38,61,0.14);
+    text-align: center;
+    max-width: 760px;
+}
+.intro-title{font-size:36px;color:#d7263d;margin:0 0 6px}
+.intro-sub{color:#e64a6b;margin:0 0 18px}
+.enter-btn{background:#d7263d;color:#fff;border:none;padding:12px 22px;border-radius:20px;cursor:pointer;font-size:1rem}
+
+/* hidden state */
+#intro.intro-hidden{opacity:0;pointer-events:none}
+
+/* Heart pop animation shown when entering */
+.heart{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%) scale(0);
+    font-size:6rem;
+    color:#d7263d;
+    z-index:10001;
+    filter:drop-shadow(0 10px 30px rgba(215,40,70,0.25));
+    will-change:transform,opacity;
+    pointer-events:none;
+    opacity:0;
+}
+@keyframes heartPop {
+    0% { transform: translate(-50%,-50%) scale(0.0); opacity: 0 }
+    40% { transform: translate(-50%,-50%) scale(1.5); opacity: 1 }
+    65% { transform: translate(-50%,-50%) scale(0.95); }
+    100% { transform: translate(-50%,-50%) scale(1.0); opacity: 0 }
+}
+
+.heart.pop {
+    animation: heartPop 700ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+/* full-screen heart overlay with mini hearts */
+.heart-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    pointer-events: none;
+}
+.heart-overlay .big-heart{
+    /* make the big heart cover about half the viewport */
+    font-size: 50vmin;
+    color: #d7263d;
+    transform: scale(0);
+    opacity: 0;
+    filter: drop-shadow(0 20px 50px rgba(215,40,70,0.25));
+    animation: bigHeartPop 700ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+@keyframes bigHeartPop{
+    0% { transform: scale(0); opacity: 0 }
+    40% { transform: scale(1.6); opacity: 1 }
+    65% { transform: scale(0.95); }
+    100%{ transform: scale(1); opacity: 1 }
+}
+
+.mini-heart{
+    position: absolute;
+    font-size: 1.4rem;
+    opacity: 0;
+    transform: translateY(0) scale(0.85);
+    animation: miniFloat 1400ms ease-out forwards;
+}
+@keyframes miniFloat{
+    0% { opacity: 0; transform: translateY(0) scale(0.6) }
+    25% { opacity: 1 }
+    100% { opacity: 0; transform: translateY(-220px) scale(1.05) }
+}
+
 
 h1 {
     color: #d7263d;
