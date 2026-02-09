@@ -24,7 +24,23 @@ class Particle{
 }
 
 function spawnFirework(){const sx=rand(cw*0.05,cw*0.95);const sy=ch;const tx=rand(cw*0.12,cw*0.88);const ty=rand(ch*0.06,ch*0.6);fireworks.push(new Firework(sx,sy,tx,ty))}
-function spawnFlowers(x,y,count=6){const flowers = ['🌸','🌺','🌼','💐','🌷','🌻','💮'];for(let i=0;i<count;i++){const el=document.createElement('div');el.className='flower';el.textContent=flowers[Math.floor(Math.random()*flowers.length)];el.style.left=(x+rand(-90,90))+'px';el.style.top=(y+rand(-90,90))+'px';el.style.animationDelay=(Math.random()*0.7)+'s';document.getElementById('flowers').appendChild(el);setTimeout(()=>el.remove(),7000)}}
+function spawnFlowers(x,y,count=6){
+  const flowers = ['🌸','🌺','🌼','💐','🌷','🌻','💮'];
+  const container = document.getElementById('flowers');
+  for(let i=0;i<count;i++){
+    const el=document.createElement('div');
+    el.className='flower';
+    el.textContent=flowers[Math.floor(Math.random()*flowers.length)];
+    // start from bottom of the viewport so flowers float up
+    const startLeft = Math.min(Math.max(8, x + rand(-90,90)), cw - 24);
+    const startTop = ch + rand(10,80); // slightly below bottom
+    el.style.left = startLeft + 'px';
+    el.style.top = startTop + 'px';
+    el.style.animationDelay=(Math.random()*0.7)+'s';
+    container.appendChild(el);
+    setTimeout(()=>el.remove(),7000);
+  }
+}
 
 // auto spawn loop
 let spawnTimer=0;function loop(){ctx.clearRect(0,0,cw,ch);

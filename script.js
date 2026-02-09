@@ -31,6 +31,12 @@ function resetButtonSizes() {
     yesExBtn.style.fontSize = '';
     yesBtn.style.padding = '';
     yesExBtn.style.padding = '';
+    // restore No button to default
+    noBtn.classList.remove('small');
+    noBtn.style.width = '';
+    noBtn.style.height = '';
+    noBtn.style.fontSize = '';
+    noBtn.style.padding = '';
     if (container) {
         container.style.padding = '';
         container.style.maxWidth = '';
@@ -135,7 +141,9 @@ yesExBtn.addEventListener('click', function() {
 
 
 noBtn.addEventListener('click', function() {
-    // enlarge the Yes buttons and the card (no navigation)
+    // show wrong answer message, then enlarge the Yes buttons and the card (no navigation)
+    messageDiv.textContent = "Wrong Answer!";
+    messageDiv.classList.remove('hidden');
     enlargeScale += 0.15;
     const newFont = baseFontPx * enlargeScale;
     const newPadY = basePadY * enlargeScale;
@@ -152,4 +160,13 @@ noBtn.addEventListener('click', function() {
     if (choicesDiv) choicesDiv.style.gap = (baseGap * enlargeScale) + 'px';
     // scale the question text proportionally as well
     if (questionP) questionP.style.fontSize = (baseQuestionFontPx * enlargeScale) + 'px';
+    // shrink No button into a small square while others are larger
+    noBtn.classList.add('small');
+    // make No button smaller proportionally as others grow
+    const baseNo = 88; // matches CSS small width
+    const newNo = Math.max(40, Math.round(baseNo / enlargeScale));
+    noBtn.style.width = newNo + 'px';
+    noBtn.style.height = newNo + 'px';
+    // reduce font-size slightly for very small buttons
+    noBtn.style.fontSize = (14 * Math.min(1, baseNo / newNo)) + 'px';
 });

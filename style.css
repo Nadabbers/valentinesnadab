@@ -132,6 +132,20 @@ h1 {
     box-shadow: 0 4px 16px rgba(255, 105, 180, 0.25);
 }
 
+/* small square variant for the No button when others enlarge */
+.valentine-btn.small {
+    width: 88px;
+    height: 88px;
+    padding: 0;
+    font-size: 0.95em;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.18s ease, height 0.18s ease, font-size 0.18s ease, padding 0.18s ease;
+}
+.valentine-btn.small:hover { transform: none; }
+
 
 button {
     background: #d7263d;
@@ -158,6 +172,15 @@ button:hover {
     font-size: 1.1em;
     margin-top: 1em;
     animation: fadeIn 1s;
+}
+
+/* Centered message under choices */
+#valentineMessage {
+    display: block;
+    text-align: center;
+    color: #222;
+    font-size: 1.05rem;
+    margin: 20px auto 0 auto;
 }
 
 @keyframes fadeIn {
