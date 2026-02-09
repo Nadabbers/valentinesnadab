@@ -49,8 +49,8 @@ export default async function handler(req, res) {
     username: 'Valentine Bot',
     embeds: [
       {
-        title: `MIA SAID: ${String(message.choice).toUpperCase()}`,
-        description: `Mia clicked **${trunc(message.choice, 256)}** on the invitation. Congrats! Have a great Valentines🎉`,
+        title: `YOUR VALENTINE SAID: ${String(message.choice).toUpperCase()}`,
+        description: `Your valentine clicked **${trunc(message.choice, 256)}** on the invitation. Congrats! Have a great Valentines🎉`,
         fields: [
           { name: 'Time', value: trunc(message.time, 256), inline: true },
           { name: 'From', value: trunc(message.meta.userAgent || 'Unknown', 1024), inline: false }
